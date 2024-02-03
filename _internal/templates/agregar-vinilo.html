@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/estilos.css">
+    <link rel="shortcut icon" href="/static/vinilo.ico" type="image/x-icon">
+    <script src="/static/navbar.js"></script>
+    <title>Coleccion Vinilos JP</title>
+</head>
+<body id="body-agregar">
+    <div class="menu-hamburguesa">
+        <div class="barra"></div>
+        <div class="barra"></div>
+        <div class="barra"></div>
+    </div>
+    <nav class="menu-desplegable">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="#">Agregar Vinilo</a></li>
+            <li><a href="ver-tracklist.html">Buscar Tracklist</a></li>
+            <li><a href="busqueda-filtrada.html">Buscar Vinilo</a></li>
+            <li><a href="eliminar-vinilo.html">Eliminar Vinilo</a></li>
+            <li><a href="modificar-vinilo.html">Modificar Vinilo</a></li>
+            <li><a href="ver-tracklist.html">Ver Coleccion</a></li>
+        </ul>
+    </nav>
+    <div id="formulario-agregar" class="container mt-5">
+        
+        <h1 class="mb-4">Agregar Vinilo a la Colección</h1>
+    
+        <form>
+            <div class="form-group">
+                <label for="interprete">Intérprete:</label>
+                <input type="text" class="form-control" id="interprete" name="interprete" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="album">Álbum:</label>
+                <input type="text" class="form-control" id="album" name="album" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="lanzamiento">Año de Lanzamiento:</label>
+                <input type="text" class="form-control" id="lanzamiento" name="lanzamiento" pattern="\d*" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <input type="text" class="form-control" id="estado" name="estado" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="comentario">Comentario:</label>
+                <textarea class="form-control" id="comentario" name="comentario"></textarea>
+            </div>
+            <div class="contenedor-botones-agregar">
+                <div class="contenedor-botones-agregar-envio">
+                    <button type="button" class="btn btn-primary" id="btnEnviar">Enviar</button>
+                    <button type="button" class="btn btn-secondary" id="btnCancelar" onclick="window.location.href='agregar-vinilo.html'">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="contenedor-boton-menu">
+        <button onclick="window.location.href='index.html'" class="boton-inicio btn btn-light">Volver al Menú</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="/static/agregar-vinilo.js"></script>
+</body>
+</html>

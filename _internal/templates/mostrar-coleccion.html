@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/estilos.css">
+    <link rel="shortcut icon" href="/static/vinilo.ico" type="image/x-icon">
+    <script src="/static/navbar.js"></script>
+    <title>Coleccion Vinilos JP</title>
+</head>
+<body>
+    <div class="contenedor-lista">
+        <div class="menu-hamburguesa">
+            <div class="barra"></div>
+            <div class="barra"></div>
+            <div class="barra"></div>
+        </div>
+        <nav class="menu-desplegable">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="agregar-vinilo.html">Agregar Vinilo</a></li>
+                <li><a href="ver-tracklist.html">Buscar Tracklist</a></li>
+                <li><a href="busqueda-filtrada.html">Buscar Vinilo</a></li>
+                <li><a href="eliminar-vinilo.html">Eliminar Vinilo</a></li>
+                <li><a href="modificar-vinilo.html">Modificar Vinilo</a></li>
+                <li><a href="#">Ver Coleccion</a></li>
+            </ul>
+        </nav>
+        
+        <h1 class="titulo">Colección Completa</h1>
+        <table class="lista-vinilos">
+            <thead>
+                <tr>
+                    <th align="center">Orden</th>
+                    <th align="center">INTERPRETE</th>
+                    <th align="center">ALBUM</th>
+                    <th align="center">AÑO</th>                
+                    <th align="center">ESTADO</th>
+                    <th align="right">ID</th>
+                    <th align="center">Comentario</th>
+                </tr>
+            </thead>
+            <tbody id="listaVinilos"> </tbody>
+        </table>
+    </div>
+    <div class="contenedor-boton-menu" id="contenedor-boton-inicio-coleccion">
+        <button onclick="window.location.href='index.html'" class="boton-inicio btn btn-light">Volver al Menú</button>
+    </div>
+    <script src="/static/coleccion.js"></script>
+</body>
+</html>

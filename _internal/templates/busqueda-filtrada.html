@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/estilos.css">
+    <link rel="shortcut icon" href="/static/vinilo.ico" type="image/x-icon">
+    <script src="/static/navbar.js"></script>
+    <title>Coleccion Vinilos JP</title>
+</head>
+<body>
+    <div class="contenedor-lista">
+        <div class="menu-hamburguesa">
+            <div class="barra"></div>
+            <div class="barra"></div>
+            <div class="barra"></div>
+        </div>
+        <nav class="menu-desplegable">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="agregar-vinilo.html">Agregar Vinilo</a></li>
+                <li><a href="ver-tracklist.html">Buscar Tracklist</a></li>
+                <li><a href="busqueda-filtrada.html">Buscar Vinilo</a></li>
+                <li><a href="eliminar-vinilo.html">Eliminar Vinilo</a></li>
+                <li><a href="modificar-vinilo.html">Modificar Vinilo</a></li>
+                <li><a href="mostrar-coleccion.html">Ver Coleccion</a></li>
+            </ul>
+        </nav>    
+        <h1 class="titulo">Buscar Vinilo</h1>
+        <form class="filtroForm">
+            <div>
+                <label for="interpreteSelect">Intérprete:</label>
+                <select id="interpreteSelect"></select>
+                <label for="lanzamientoSelect">Decada:</label>
+                <select id="lanzamientoSelect"></select>
+            </div>
+            <div class="contenedor-boton-busqueda">
+                <button type="button" class="btn boton-busqueda" onclick="filtrarVinilos()">Filtrar</button>
+                <button type="button" class="btn btn-link boton-cancelar-filtro" onclick="window.location.href='busqueda-filtrada.html'">Cancelar</button>
+            </div>
+        </form>
+        <table id="tabla-busqueda" class="lista-vinilos" >
+            <thead>
+                <th align="center">Orden</th>
+                <th align="center">INTERPRETE</th>
+                <th align="center">ALBUM</th>
+                <th align="center">AÑO</th>
+                <th align="center">ESTADO</th>
+                <th align="center">ID</th>
+                <th align="center">Comentario</th>
+            </thead>
+            <tbody id="tablaFiltrada">
+            </tbody>
+        </table>
+        <div class="contenedor-cantidad-filtrada">
+            <p id="cantidad-filtrada"></p>
+        </div>
+    </div>
+    <div id="footer-busqueda-filtrada" class="footer">
+        <div class="contenedor-boton-catalogo"> 
+            <button type="button" id="boton-catalogo" onclick="window.location.href ='mostrar-coleccion.html'">Colección completa</button>
+        </div>
+        <div class="contenedor-boton-menu">
+            <button type="button" onclick="window.location.href='index.html'" class="boton-inicio btn btn-light">Volver al Menú</button>
+        </div>
+    </div>
+    <script src="/static/busqueda-filtrada.js"></script>
+</body>
+</html>

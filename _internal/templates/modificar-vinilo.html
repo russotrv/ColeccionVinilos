@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/estilos.css">
+    <link rel="shortcut icon" href="/static/vinilo.ico" type="image/x-icon">
+    <script src="/static/navbar.js"></script>
+    <title>Coleccion Vinilos JP</title>
+</head>
+<body id="body-modificar">
+    <div class="menu-hamburguesa">
+        <div class="barra"></div>
+        <div class="barra"></div>
+        <div class="barra"></div>
+    </div>
+    <nav class="menu-desplegable">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="agregar-vinilo.html">Agregar Vinilo</a></li>
+            <li><a href="ver-tracklist.html">Buscar Tracklist</a></li>
+            <li><a href="busqueda-filtrada.html">Buscar Vinilo</a></li>
+            <li><a href="eliminar-vinilo.html">Eliminar Vinilo</a></li>
+            <li><a href="#">Modificar Vinilo</a></li>
+            <li><a href="mostrar-coleccion.html">Ver Coleccion</a></li>
+        </ul>
+    </nav>
+    <div id="app">
+        <div class="contenedor-lista">
+            <h1 class="titulo">Modificar Datos de Vinilo</h1>
+            <form id="modificar-form" @submit.prevent="obtenerVinilo">
+                <div>
+                    <label for="id">ID del Vinilo:</label>
+                    <input type="number" v-model="id" required min="1"><br>
+                </div>
+                <div>
+                    <button id="boton-modificar" type="submit">Buscar</button>
+                </div>
+            </form>
+            
+            <div id="datos-vinilo-modificar" v-if="mostrarDatosVinilo">
+                <h2>Datos del Vinilo</h2>
+                <form id="datos-modificar-form" @submit.prevent="guardarCambios">
+                    <label for="codigoModificar">Codigo:</label>
+                    <input type="text" id="codigoModificar" v-model="codigo" required ><br>
+                    
+                    <label for="interpreteModificar">Interprete:</label>
+                    <input type="text" id="interpreteModificar" v-model="interprete" required><br>
+
+                    <label for="albumModificar">Album:</label>
+                    <input type="text" id="albumModificar" v-model="album" required><br>
+
+                    <label for="lanzamientoModificar">Año:</label>
+                    <input type="text" id="lanzamientoModificar" v-model="lanzamiento" required><br>
+
+                    <label for="estadoModificar">Estado:</label>
+                    <input type="text" id="estadoModificar" v-model="estado" required><br>
+
+                    <label for="comentarioModificar">Comentario:</label>
+                    <input type="text" id="comentarioModificar" v-model="comentario"><br>
+
+                    <button class="btn" id="guardar-modificar" type="submit">Guardar Cambios</button>
+                    <button class="btn" id="cancelar-modificar" onclick="window.location.href='modificar-vinilo.html'">Cancelar</button>
+                </form>
+            </div>
+            
+        </div>
+    <div class="contenedor-boton-menu">
+        <button onclick="window.location.href='index.html'" id="boton-menu-modificar" class="boton-inicio btn btn-light">Volver al Menú</button>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        const URL = "http://127.0.0.1:5000/"
+
+        const app = new Vue({
+            el: '#app',
+            data() {
+                const cod = 0;
+                return {
+                    id: '',
+                    codigo: '',
+                    interprete: '',
+                    album: '',
+                    lanzamiento: '',
+                    estado: '',
+                    comentario: '',
+                    mostrarDatosVinilo: false,
+                };
+            },
+            methods: {
+                tablaVisible(){
+                    let footerBusqueda = document.querySelector(".contenedor-boton-menu");
+                    footerBusqueda.classList.remove("tabla-oculta");
+                    let datosVinilo = document.getElementById("datos-vinilo-modificar");
+                    datosVinilo.classList.add("mostrar");
+                },
+                tablaOculta(){
+                    try {
+                        let footerBusqueda = document.querySelector(".contenedor-boton-menu");
+                        footerBusqueda.classList.add("tabla-oculta");
+                        let datosVinilo = document.getElementById("datos-vinilo-modificar");
+                        if (datosVinilo !== null) {
+                            datosVinilo.classList.remove("mostrar");
+                        }
+                    }catch (error) {
+                        console.log(error)
+                    }
+                },
+                obtenerVinilo() {
+                    console.log(this.id)
+                    fetch(URL + 'vinilos/' + this.id)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`Error de red: ${response.status}`);
+                            }
+                            return response.json(); // Cambiado a text en lugar de json
+                        })
+                        .then(data => {
+                            console.log(data);
+                            this.mostrarDatosVinilo = true;
+                            this.codigo = data.codigo;
+                            this.interprete = data.interprete;
+                            this.album = data.album;
+                            this.lanzamiento = data.lanzamiento;
+                            this.estado = data.estado;
+                            this.comentario =  data.comentario;
+                            this.tablaVisible();
+                        })
+                        .catch(error => console.error('Error:', error));
+                },
+                guardarCambios() {
+                    const formData = new FormData();
+                    formData.append('codigo', this.codigo);
+                    formData.append('interprete', this.interprete);
+                    formData.append('album', this.album);
+                    formData.append('lanzamiento', this.lanzamiento);
+                    formData.append('estado', this.estado);
+                    formData.append('comentario', this.comentario);
+                    
+                    fetch(URL + 'vinilos/' + this.id, {
+                        method: 'PUT',
+                        body: formData,
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert('Vinilo actualizado correctamente');
+                            this.limpiarFormulario();
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error al actualizar el vinilo');
+                        });
+                },
+                limpiarFormulario() {
+                    this.id = ''
+                    this.codigo = '';
+                    this.interprete = '';
+                    this.album = '';
+                    this.lanzamiento = '';
+                    this.estado = '';
+                    this.comentario = '';
+                    this.mostrarDatosVinilo = false;
+                    this.tablaOculta();
+                }
+            }
+        });
+        app.tablaOculta();
+        
+    </script>
+</body>
+</html>

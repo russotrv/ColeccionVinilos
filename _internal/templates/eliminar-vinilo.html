@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/estilos.css">
+    <link rel="shortcut icon" href="/static/vinilo.ico" type="image/x-icon">
+    <script src="/static/navbar.js"></script>
+    <title>Coleccion Vinilos JP</title>
+</head>
+<body>
+    <div class="contenedor-lista">
+        <div class="menu-hamburguesa">
+            <div class="barra"></div>
+            <div class="barra"></div>
+            <div class="barra"></div>
+        </div>
+        <nav class="menu-desplegable">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="agregar-vinilo.html">Agregar Vinilo</a></li>
+                <li><a href="ver-tracklist.html">Buscar Tracklist</a></li>
+                <li><a href="busqueda-filtrada.html">Buscar Vinilo</a></li>
+                <li><a href="#">Eliminar Vinilo</a></li>
+                <li><a href="modificar-vinilo.html">Modificar Vinilo</a></li>
+                <li><a href="mostrar-coleccion.html">Ver Coleccion</a></li>
+            </ul>
+        </nav>
+        
+        
+        <h1 class="titulo">Baja de Vinilo</h1>
+    
+        <table class="lista-vinilos borde-eliminar">
+            <thead>
+                <tr>
+                    <th align="center">Orden</th>
+                    <th align="center">INTERPRETE</th>
+                    <th align="center">ALBUM</th>
+                    <th align="center">AÑO</th>                
+                    <th align="center">ESTADO</th>
+                    <th align="center">ID</th>
+                    <th align="center">Comentario</th>
+                </tr>
+            </thead>
+            <tbody id="lista-eliminar"> 
+
+            </tbody>
+        </table>
+    </div>
+    <div class="contenedor-boton-menu">
+        <button onclick="window.location.href='index.html'" class="boton-inicio btn btn-light">Volver al Menú</button>
+    </div>
+
+    <script>
+        const URL = 'http://127.0.0.1:5000/';
+        let listaEliminar =document.getElementById("lista-eliminar");
+        var vinilos = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Tu código aquí se ejecutará cuando el DOM esté completamente construido, antes de cargar imágenes y otros recursos
+            descargarLista();
+        });
+
+
+        function descargarLista(){
+            fetch(URL + 'vinilos')
+            .then(function (response) {
+                if (response.ok) {return response.json(); }
+            })
+            .then(function (data) {
+                if(data == null){
+                    console.log("Error al descargar la lista");
+                }else{
+                    vinilos = data;
+                    console.log("Lista descargada con exito!");
+                    console.log("Hay " + vinilos.length + " vinilos descargados")
+                    cargarLista(vinilos);
+                    }
+                })
+            .catch(function (error) {
+                // Código para manejar errores
+                alert('Error al obtener los productos.');
+            });
+        }
+
+        function cargarLista(vinilos){
+            console.log(vinilos.length + " vinilos recibidos para cargar");
+            let listaEliminar = document.getElementById("lista-eliminar");
+            let cant = 1;
+            for(vinilo of vinilos){
+                let fila = cargarFila(vinilo,cant);
+                listaEliminar.appendChild(fila);
+                cant+=1;
+            }
+        }
+
+        function cargarFila(vinilo,id){
+            let fila = document.createElement("tr");
+            fila.innerHTML = '<td align="center">' + id + '</td>'+
+                    '<td align="center">' + vinilo.interprete + '</td>' +
+                    '<td align="center">' + vinilo.album + '</td>' +
+                    '<td align="center">' + vinilo.lanzamiento + '</td>' +
+                    '<td align="center">' + vinilo.estado + '</td>' +
+                    '<td align="center">' + vinilo.codigo + '</td>' +
+                    '<td align="center">' + vinilo.comentario + '</td>'+
+                    '<td align="center"><button type="button" class="boton-eliminar" onclick="eliminarVinilo('+vinilo.codigo+')">Eliminar</button></td>';
+            return fila
+        }
+
+        function eliminarVinilo(codigo){
+            if(confirm("se eliminara el vinilo de codigo: " + codigo)){
+                //console.log(typeof(codigo));
+                fetch(URL + 'vinilos/' + codigo, {
+                    method: 'DELETE',
+                    })
+                    .then(response => {
+                        console.log('Respuesta de DELETE:', response);
+                        if (response.ok) {
+                            // Si la solicitud DELETE fue exitosa, puedes manejar la lógica aquí
+                            vinilos = vinilos.filter(vinilo => vinilo.codigo !== codigo);
+                            console.log('Vinilo eliminado con éxito.');                        
+                            window.location.href = 'eliminar-vinilo.html';
+                            //cargarLista(vinilos);
+                        } else {
+                            console.error('Error en la solicitud DELETE:', response.statusText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error en la solicitud DELETE:', error);
+                    });
+            }else
+                console.log("Eliminacion cancelada");
+        }
+    </script>
+</body>
+</html>

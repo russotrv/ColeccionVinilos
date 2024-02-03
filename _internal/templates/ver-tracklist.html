@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/estilos.css">
+    <link rel="shortcut icon" href="/static/vinilo.ico" type="image/x-icon">
+    <script src="/static/navbar.js"></script>
+    <title>Coleccion Vinilos JP</title>
+</head>
+<body>
+    <div class="contenedor-lista">
+        <div class="menu-hamburguesa">
+            <div class="barra"></div>
+            <div class="barra"></div>
+            <div class="barra"></div>
+        </div>
+        <nav class="menu-desplegable">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="agregar-vinilo.html">Agregar Vinilo</a></li>
+                <li><a href="#">Buscar Tracklist</a></li>
+                <li><a href="busqueda-filtrada.html">Buscar Vinilo</a></li>
+                <li><a href="eliminar-vinilo.html">Eliminar Vinilo</a></li>
+                <li><a href="modificar-vinilo.html">Modificar Vinilo</a></li>
+                <li><a href="mostrar-coleccion.html">Ver Coleccion</a></li>
+            </ul>
+        </nav>
+        <h1 class="titulo">Buscar Tracklist</h1>
+        <form class="filtroForm">
+            <div>
+                <label for="nombre-album">Album:</label>
+                <select id="nombre-album"></select>
+            </div>
+            <div class="contenedor-boton-busqueda">
+                <button type="button" class="btn boton-busqueda" onclick="buscarTemas()">Buscar</button>
+                <button type="button" class="btn btn-link boton-cancelar-filtro" onclick="window.location.href='ver-tracklist.html'">Cancelar</button>
+            </div>
+        </form>
+        <h3 id="titulo-album"></h3>
+        <ol id="lista-temas" class="lista-vinilos">
+        </ol>
+        
+    </div>
+    <div class="footer" id="footer-tracklist">
+        <div class="contenedor-boton-menu">
+            <button type="button" onclick="window.location.href='index.html'" class="boton-inicio btn btn-light">Volver al Menú</button>
+        </div>
+    </div>
+    <script src="/static/ver-tracklist.js"></script>
+</body>
+</html>
